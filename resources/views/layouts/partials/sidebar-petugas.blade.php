@@ -13,3 +13,4 @@
 <a href="/petugas/transactions" class="block px-6 py-3 hover:bg-indigo-800 {{ request()->is('petugas/transactions') ? 'bg-indigo-800' : '' }}">
     <i class="fas fa-history w-6"></i>Riwayat
 </a>
+
