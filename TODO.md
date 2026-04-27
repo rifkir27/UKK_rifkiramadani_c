@@ -1,9 +1,10 @@
-# Fix OfficerDashboard Class Not Found
+# Hapus Fitur Scan & Barcode, Gunakan NIS Saja
 
-- [x] Analyze issue and identify missing imports in routes/web.php
-- [x] Create fix plan and get user approval
-- [x] Add aliased use statements for Officer controllers in routes/web.php
-- [x] Verify fix resolves the error
-- [x] Update Tambah Pengguna form: remove admin role, add siswa role
-- [x] Add student-specific fields (NIS, Rayon, Rombel, Address) to create form
-- [x] Add missing student routes in routes/web.php to fix 404 on student login
+- [ ] Officer/TransactionController.php: Ubah validasi dan query pencarian siswa dari barcode ke NIS
+- [ ] resources/views/officer/transactions/borrow.blade.php: Ubah label, placeholder, dan name input ke NIS
+- [ ] resources/views/officer/dashboard/index.blade.php: Ubah teks deskripsi peminjaman
+- [ ] Admin/UserController.php: Hapus pembuatan barcode saat create siswa
+- [ ] Auth/RegisterController.php: Hapus pembuatan barcode saat register siswa
+- [ ] database/seeders/DatabaseSeeder.php: Hapus barcode dari seeder siswa
+- [ ] app/Models/Student.php: Hapus barcode dari $fillable
+

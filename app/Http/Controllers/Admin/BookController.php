@@ -33,7 +33,8 @@ class BookController extends Controller
             'category_id' => 'required|exists:categories,id',
             'description' => 'nullable|string',
         ]);
-        $code = 'BUKU-' . str_pad(Book::count() + 1, 4, '0', STR_PAD_LEFT);
+        $lastId = Book::max('id') ?? 0;
+        $code = 'BUKU-' . str_pad($lastId + 1, 4, '0', STR_PAD_LEFT);
         Book::create(array_merge($request->all(), ['code' => $code, 'status' => 'available']));
         return redirect()->route('admin.books.index')->with('success', 'Buku berhasil ditambahkan');
     }
@@ -58,13 +59,14 @@ class BookController extends Controller
             'status' => 'required|in:available,borrowed,damaged,lost',
         ]);
         $book->update($request->all());
-        return redirect()->route('admin.books.index')->with('success', 'Buku berhasil diupdate');
+        return redirect()->route('admin.books.index')->with('success', 'Buku ' . $book->title . ' berhasil diupdate');
     }
 
     public function destroy(Book $book)
     {
+        $title = $book->title;
         $book->delete();
-        return redirect()->route('admin.books.index')->with('success', 'Buku berhasil dihapus');
+        return redirect()->route('admin.books.index')->with('success', 'Berhasil menghapus buku ' . $title);
     }
 }
 
