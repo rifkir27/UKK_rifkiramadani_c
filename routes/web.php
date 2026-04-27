@@ -11,7 +11,9 @@ use App\Http\Controllers\Admin\RombelController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\TransactionController;
 use App\Http\Controllers\Admin\ReportController;
-
+use App\Http\Controllers\Officer\DashboardController as OfficerDashboard;
+use App\Http\Controllers\Officer\TransactionController as OfficerTransaction;
+use App\Http\Controllers\Officer\FineController as OfficerFine;
 
 
 // Public
@@ -40,3 +42,17 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/reports/data', [ReportController::class, 'data'])->name('reports.data');
     Route::get('/reports/pdf', [ReportController::class, 'pdf'])->name('reports.pdf');
     });
+
+    // Officer Routes
+Route::middleware(['auth', 'role:petugas'])->prefix('petugas')->name('petugas.')->group(function () {
+    Route::get('/dashboard', [OfficerDashboard::class, 'index'])->name('dashboard');
+    Route::get('/transactions', [OfficerTransaction::class, 'index'])->name('transactions.index');
+    Route::get('/transactions/borrow', [OfficerTransaction::class, 'borrowForm'])->name('transactions.borrow');
+    Route::post('/transactions/borrow', [OfficerTransaction::class, 'processBorrow'])->name('transactions.borrow.store');
+    Route::get('/transactions/return', [OfficerTransaction::class, 'returnForm'])->name('transactions.return');
+    Route::post('/transactions/return', [OfficerTransaction::class, 'processReturn'])->name('transactions.return.store');
+    Route::get('/transactions/{transaction}', [OfficerTransaction::class, 'show'])->name('transactions.show');
+    Route::get('/fines', [OfficerFine::class, 'index'])->name('fines.index');
+    Route::post('/fines/{fine}/pay', [OfficerFine::class, 'pay'])->name('fines.pay');
+});
+
