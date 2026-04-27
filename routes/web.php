@@ -14,6 +14,10 @@ use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Officer\DashboardController as OfficerDashboard;
 use App\Http\Controllers\Officer\TransactionController as OfficerTransaction;
 use App\Http\Controllers\Officer\FineController as OfficerFine;
+use App\Http\Controllers\Student\DashboardController as StudentDashboard;
+use App\Http\Controllers\Student\BookController as StudentBook;
+use App\Http\Controllers\Student\TransactionController as StudentTransaction;
+use App\Http\Controllers\Student\FineController as StudentFine;
 
 
 // Public
@@ -31,7 +35,7 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 // Admin Routes
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
- Route::resource('categories', CategoryController::class);
+    Route::resource('categories', CategoryController::class);
     Route::resource('books', BookController::class);
     Route::resource('rayons', RayonController::class);
     Route::resource('rombels', RombelController::class);
@@ -41,9 +45,9 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
     Route::get('/reports/data', [ReportController::class, 'data'])->name('reports.data');
     Route::get('/reports/pdf', [ReportController::class, 'pdf'])->name('reports.pdf');
-    });
+});
 
-    // Officer Routes
+// Officer Routes
 Route::middleware(['auth', 'role:petugas'])->prefix('petugas')->name('petugas.')->group(function () {
     Route::get('/dashboard', [OfficerDashboard::class, 'index'])->name('dashboard');
     Route::get('/transactions', [OfficerTransaction::class, 'index'])->name('transactions.index');
@@ -56,3 +60,12 @@ Route::middleware(['auth', 'role:petugas'])->prefix('petugas')->name('petugas.')
     Route::post('/fines/{fine}/pay', [OfficerFine::class, 'pay'])->name('fines.pay');
 });
 
+// Student Routes
+Route::middleware(['auth', 'role:siswa'])->prefix('siswa')->name('siswa.')->group(function () {
+    Route::get('/dashboard', [StudentDashboard::class, 'index'])->name('dashboard');
+    Route::get('/books', [StudentBook::class, 'index'])->name('books.index');
+    Route::get('/books/{book}', [StudentBook::class, 'show'])->name('books.show');
+    Route::post('/books/{book}/borrow', [StudentBook::class, 'borrow'])->name('books.borrow');
+    Route::get('/transactions', [StudentTransaction::class, 'index'])->name('transactions.index');
+    Route::get('/fines', [StudentFine::class, 'index'])->name('fines.index');
+});
