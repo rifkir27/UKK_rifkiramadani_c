@@ -42,7 +42,7 @@ class DatabaseSeeder extends Seeder
         }
 
         // Rombel
-        $rombels = ['X PPLG ', 'XI PPLG 2', 'XII PPLG', 'X TKJ 1', 'XI TKJ 2', 'XII TKJ '];
+        $rombels = ['X RPL 1', 'X RPL 2', 'XI RPL 1', 'XI RPL 2', 'XII RPL 1', 'XII RPL 2', 'X TKJ 1', 'X TKJ 2', 'XI TKJ 1', 'XI TKJ 2'];
         foreach ($rombels as $index => $r) {
             Rombel::create(['name' => $r, 'rayon_id' => ($index % 7) + 1]);
         }
@@ -94,9 +94,9 @@ class DatabaseSeeder extends Seeder
 
         // Siswa demo
         $studentUser = User::create([
-            'name' => 'Nor Rifki Ramadani',
-            'email' => 'Rifki@siswa.com',
-            'password' => Hash::make('Rifki123'),
+            'name' => 'nor rifki ramadani',
+            'email' => 'rifki@siswa.com',
+            'password' => Hash::make('siswa123'),
             'role' => 'siswa',
             'phone' => '083456789012',
             'status' => 'active',
