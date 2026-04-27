@@ -31,7 +31,7 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 // Admin Routes
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-     Route::resource('categories', CategoryController::class);
+ Route::resource('categories', CategoryController::class);
     Route::resource('books', BookController::class);
     Route::resource('rayons', RayonController::class);
     Route::resource('rombels', RombelController::class);
