@@ -18,20 +18,48 @@ class UserController extends Controller
         return view('admin.users.index', compact('users'));
     }
 
-    public function create()
+    public function createPetugas()
     {
-        $rayons = Rayon::all();
-        $rombels = Rombel::all();
-        return view('admin.users.create', compact('rayons', 'rombels'));
+        return view('admin.users.create-petugas');
     }
 
-    public function store(Request $request)
+    public function storePetugas(Request $request)
     {
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:6',
-            'role' => 'required|in:admin,petugas,siswa',
+            'phone' => 'nullable|string',
+        ]);
+
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role' => 'petugas',
+            'phone' => $request->phone,
+            'status' => 'active',
+        ]);
+
+        return redirect()->route('admin.users.index')->with('success', 'Petugas berhasil ditambahkan');
+    }
+
+    public function createSiswa()
+    {
+        $rayons = Rayon::all();
+        $rombels = Rombel::all();
+        return view('admin.users.create-siswa', compact('rayons', 'rombels'));
+    }
+
+    public function storeSiswa(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:6',
+            'nis' => 'required|string|unique:students,nis',
+            'rayon_id' => 'required|exists:rayons,id',
+            'rombel_id' => 'required|exists:rombels,id',
             'phone' => 'nullable|string',
         ]);
 
@@ -39,23 +67,21 @@ class UserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role' => $request->role,
+            'role' => 'siswa',
             'phone' => $request->phone,
             'status' => 'active',
         ]);
 
-        if ($request->role === 'siswa') {
-            Student::create([
-                'user_id' => $user->id,
-                'nis' => $request->nis,
-                'rayon_id' => $request->rayon_id,
-                'rombel_id' => $request->rombel_id,
-                'address' => $request->address,
-                'barcode' => 'SISWA-' . str_pad($user->id, 5, '0', STR_PAD_LEFT),
-            ]);
-        }
+        Student::create([
+            'user_id' => $user->id,
+            'nis' => $request->nis,
+            'rayon_id' => $request->rayon_id,
+            'rombel_id' => $request->rombel_id,
+            'address' => $request->address,
+            'barcode' => 'SISWA-' . str_pad($user->id, 5, '0', STR_PAD_LEFT),
+        ]);
 
-        return redirect()->route('admin.users.index')->with('success', 'Pengguna berhasil ditambahkan');
+        return redirect()->route('admin.users.index')->with('success', 'Siswa berhasil ditambahkan');
     }
 
     public function edit(User $user)

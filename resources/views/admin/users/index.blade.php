@@ -8,9 +8,14 @@
         <h1 class="text-3xl font-bold text-gray-800">Kelola Pengguna</h1>
         <p class="text-gray-600">Daftar petugas dan siswa</p>
     </div>
-    <a href="{{ route('admin.users.create') }}" class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700">
-        <i class="fas fa-plus mr-2"></i>Tambah Pengguna
-    </a>
+    <div class="flex gap-2">
+        <a href="{{ route('admin.users.create-petugas') }}" class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700">
+            <i class="fas fa-plus mr-2"></i>Tambah Petugas
+        </a>
+        <a href="{{ route('admin.users.create-siswa') }}" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">
+            <i class="fas fa-plus mr-2"></i>Tambah Siswa
+        </a>
+    </div>
 </div>
 
 <div class="bg-white rounded-xl shadow p-6">
