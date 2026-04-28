@@ -6,9 +6,20 @@ use Illuminate\Database\Eloquent\Model;
 
 class Book extends Model
 {
-protected $fillable = [
+    protected $fillable = [
         'category_id',
-        'code
+        'code',
+        'isbn',
+        'title',
+        'author',
+        'publisher',
+        'year',
+        'stock',
+        'price',
+        'cover_image',
+        'description',
+        'status',
+    ];
 
     public function category()
     {
@@ -20,4 +31,3 @@ protected $fillable = [
         return $this->hasMany(TransactionDetail::class);
     }
 }
-

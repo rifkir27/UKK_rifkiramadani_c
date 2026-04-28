@@ -35,7 +35,6 @@
                         <p class="text-sm font-medium">{{ auth()->user()->name }}</p>
                         <p class="text-xs text-indigo-300 capitalize">{{ auth()->user()->role }}</p>
                     </div>
-                </div>
                 <form action="{{ route('logout') }}" method="POST" class="mt-3">
                     @csrf
                     <button type="submit" class="w-full text-left text-sm text-red-300 hover:text-red-200">
@@ -76,10 +75,24 @@
                         {{ session('error') }}
                     </div>
                 @endif
+
+                {{-- Notifikasi Overdue Global untuk Siswa --}}
+                @isset($globalHasOverdue)
+                    @if($globalHasOverdue)
+                    <div class="mb-4 bg-red-100 border-l-4 border-red-500 rounded-lg p-4 shadow-sm">
+                        <div class="flex items-center">
+                            <i class="fas fa-exclamation-triangle text-red-600 text-xl mr-3"></i>
+                            <div>
+                                <h3 class="font-bold text-red-800">Peringatan Peminjaman Terlambat!</h3>
+                                <p class="text-red-700 text-sm">Anda memiliki peminjaman yang sudah lewat jatuh tempo. Segera kembalikan buku terlebih dahulu sebelum meminjam buku lain.</p>
+                            </div>
+                    </div>
+                    @endif
+                @endisset
+
                 @yield('content')
             </main>
         </div>
-    </div>
     @else
         <main>
             @yield('content')
@@ -88,4 +101,3 @@
     @stack('scripts')
 </body>
 </html>
-
