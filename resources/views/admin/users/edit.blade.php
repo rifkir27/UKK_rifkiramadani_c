@@ -24,14 +24,6 @@
             <input type="password" name="password" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-indigo-500 outline-none">
         </div>
         <div class="mb-4">
-            <label class="block text-gray-700 font-bold mb-2">Role</label>
-            <select name="role" required class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-indigo-500 outline-none">
-                <option value="admin" {{ $user->role == 'admin' ? 'selected' : '' }}>Admin</option>
-                <option value="petugas" {{ $user->role == 'petugas' ? 'selected' : '' }}>Petugas</option>
-                <option value="siswa" {{ $user->role == 'siswa' ? 'selected' : '' }}>Siswa</option>
-            </select>
-        </div>
-        <div class="mb-4">
             <label class="block text-gray-700 font-bold mb-2">Telepon</label>
             <input type="text" name="phone" value="{{ $user->phone }}" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-indigo-500 outline-none">
         </div>

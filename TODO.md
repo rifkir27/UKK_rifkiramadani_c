@@ -10,4 +10,5 @@
 - [x] 8. Update `app/Http/Controllers/Admin/UserController.php` — tambah indexPetugas & indexSiswa
 - [x] 9. Update `routes/web.php` — tambah route index petugas & siswa
 - [x] 10. Update `resources/views/layouts/partials/sidebar-admin.blade.php` — menu terpisah
+- [x] 11. Update `app/Http/Controllers/Admin/UserController.php` — notifikasi update siswa/petugas dengan nama
 

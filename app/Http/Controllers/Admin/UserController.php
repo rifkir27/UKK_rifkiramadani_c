@@ -107,18 +107,18 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $user->id,
-            'role' => 'required|in:admin,petugas,siswa',
             'phone' => 'nullable|string',
         ]);
 
-        $data = $request->only('name', 'email', 'role', 'phone');
+        $data = $request->only('name', 'email', 'phone');
         if ($request->password) {
             $data['password'] = Hash::make($request->password);
         }
         $user->update($data);
 
         $redirectRoute = $user->role === 'siswa' ? 'admin.siswa.index' : 'admin.petugas.index';
-        return redirect()->route($redirectRoute)->with('success', 'Pengguna berhasil diupdate');
+        $roleLabel = $user->role === 'siswa' ? 'Siswa' : 'Petugas';
+        return redirect()->route($redirectRoute)->with('success', $roleLabel . ' ' . $user->name . ' berhasil diupdate');
     }
 
     public function destroy(User $user)
