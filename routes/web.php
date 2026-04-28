@@ -68,4 +68,5 @@ Route::middleware(['auth', 'role:siswa'])->prefix('siswa')->name('siswa.')->grou
     Route::post('/books/{book}/borrow', [StudentBook::class, 'borrow'])->name('books.borrow');
     Route::get('/transactions', [StudentTransaction::class, 'index'])->name('transactions.index');
     Route::get('/fines', [StudentFine::class, 'index'])->name('fines.index');
+    Route::get('/barcode', [StudentDashboard::class, 'showBarcode'])->name('barcode');
 });

@@ -33,6 +33,22 @@
 </div>
 @endif
 
+<!-- Barcode Card -->
+@if($studentBarcode)
+<div class="mb-6 bg-white rounded-xl shadow p-6 border-l-4 border-indigo-500">
+    <div class="flex justify-between items-center">
+        <div>
+            <p class="text-gray-500 text-sm">Kode Peminjaman</p>
+            <p class="text-xl font-bold font-mono">{{ $studentBarcode }}</p>
+            <p class="text-xs text-gray-400 mt-1">Tunjukkan QR Code ini ke petugas saat meminjam buku</p>
+        </div>
+        <a href="{{ route('siswa.barcode') }}" class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 text-sm">
+            <i class="fas fa-qrcode mr-2"></i>Lihat QR Code
+        </a>
+    </div>
+</div>
+@endif
+
 <!-- Stats -->
 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
     <div class="bg-white rounded-xl shadow p-6 border-l-4 border-blue-500">

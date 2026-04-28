@@ -11,7 +11,7 @@ class BookController extends Controller
 {
     public function index()
     {
-        $books = Book::with('category')->latest()->get();
+        $books = Book::with('category')->latest('updated_at')->get();
         return view('admin.books.index', compact('books'));
     }
 

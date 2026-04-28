@@ -24,7 +24,7 @@ class BookController extends Controller
             $query->where('category_id', $request->category);
         }
 
-        $books = $query->latest()->get();
+        $books = $query->latest('updated_at')->get();
         $categories = Category::all();
         return view('student.books.index', compact('books', 'categories'));
     }

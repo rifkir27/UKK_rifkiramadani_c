@@ -7,6 +7,8 @@ use App\Models\Transaction;
 use App\Models\Fine;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Endroid\QrCode\QrCode;
+use Endroid\QrCode\Writer\PngWriter;
 
 class DashboardController extends Controller
 {
@@ -38,9 +40,27 @@ class DashboardController extends Controller
             ->take(5)
             ->get();
 
+        $studentBarcode = auth()->user()->student?->barcode;
+
         return view('student.dashboard.index', compact(
-            'activeLoans', 'overdueLoans', 'dueSoonLoans', 'totalFines', 'loanHistory'
+            'activeLoans', 'overdueLoans', 'dueSoonLoans', 'totalFines', 'loanHistory', 'studentBarcode'
         ));
+    }
+
+    public function showBarcode()
+    {
+        $student = auth()->user()->student;
+
+        if (!$student || !$student->barcode) {
+            return redirect()->route('siswa.dashboard')->with('error', 'QR Code tidak ditemukan.');
+        }
+
+        $qrCode = new QrCode($student->barcode);
+        $writer = new PngWriter();
+        $result = $writer->write($qrCode);
+        $qrImage = base64_encode($result->getString());
+
+        return view('student.dashboard.barcode', compact('student', 'qrImage'));
     }
 }
 
