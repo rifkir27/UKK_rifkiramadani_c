@@ -13,8 +13,11 @@
 <a href="/admin/rombels" class="block px-6 py-3 hover:bg-indigo-800 {{ request()->is('admin/rombels*') ? 'bg-indigo-800' : '' }}">
     <i class="fas fa-users-class w-6"></i>Rombel
 </a>
-<a href="/admin/users" class="block px-6 py-3 hover:bg-indigo-800 {{ request()->is('admin/users*') ? 'bg-indigo-800' : '' }}">
-    <i class="fas fa-user-cog w-6"></i>Pengguna
+<a href="/admin/petugas" class="block px-6 py-3 hover:bg-indigo-800 {{ request()->is('admin/petugas*') ? 'bg-indigo-800' : '' }}">
+    <i class="fas fa-user-tie w-6"></i>Kelola Petugas
+</a>
+<a href="/admin/siswa" class="block px-6 py-3 hover:bg-indigo-800 {{ request()->is('admin/siswa*') ? 'bg-indigo-800' : '' }}">
+    <i class="fas fa-user-graduate w-6"></i>Kelola Siswa
 </a>
 <a href="/admin/transactions" class="block px-6 py-3 hover:bg-indigo-800 {{ request()->is('admin/transactions*') ? 'bg-indigo-800' : '' }}">
     <i class="fas fa-exchange-alt w-6"></i>Transaksi

@@ -14,8 +14,19 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::where('role', '!=', 'admin')->latest()->get();
-        return view('admin.users.index', compact('users'));
+        return redirect()->route('admin.petugas.index');
+    }
+
+    public function indexPetugas()
+    {
+        $users = User::where('role', 'petugas')->latest()->get();
+        return view('admin.users.index-petugas', compact('users'));
+    }
+
+    public function indexSiswa()
+    {
+        $users = User::where('role', 'siswa')->with('student.rayon', 'student.rombel')->latest()->get();
+        return view('admin.users.index-siswa', compact('users'));
     }
 
     public function createPetugas()
@@ -41,7 +52,7 @@ class UserController extends Controller
             'status' => 'active',
         ]);
 
-        return redirect()->route('admin.users.index')->with('success', 'Petugas berhasil ditambahkan');
+        return redirect()->route('admin.petugas.index')->with('success', 'Petugas berhasil ditambahkan');
     }
 
     public function createSiswa()
@@ -81,7 +92,7 @@ class UserController extends Controller
             'barcode' => 'SISWA-' . str_pad($user->id, 5, '0', STR_PAD_LEFT),
         ]);
 
-        return redirect()->route('admin.users.index')->with('success', 'Siswa berhasil ditambahkan');
+        return redirect()->route('admin.siswa.index')->with('success', 'Siswa berhasil ditambahkan');
     }
 
     public function edit(User $user)
@@ -106,12 +117,16 @@ class UserController extends Controller
         }
         $user->update($data);
 
-        return redirect()->route('admin.users.index')->with('success', 'Pengguna berhasil diupdate');
+        $redirectRoute = $user->role === 'siswa' ? 'admin.siswa.index' : 'admin.petugas.index';
+        return redirect()->route($redirectRoute)->with('success', 'Pengguna berhasil diupdate');
     }
 
     public function destroy(User $user)
     {
+        $role = $user->role;
         $user->delete();
-        return redirect()->route('admin.users.index')->with('success', 'Pengguna berhasil dihapus');
+
+        $redirectRoute = $role === 'siswa' ? 'admin.siswa.index' : 'admin.petugas.index';
+        return redirect()->route($redirectRoute)->with('success', 'Pengguna berhasil dihapus');
     }
 }

@@ -40,6 +40,8 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::resource('rayons', RayonController::class);
     Route::resource('rombels', RombelController::class);
     Route::resource('users', UserController::class);
+    Route::get('/petugas', [UserController::class, 'indexPetugas'])->name('petugas.index');
+    Route::get('/siswa', [UserController::class, 'indexSiswa'])->name('siswa.index');
     Route::get('/users/petugas/create', [UserController::class, 'createPetugas'])->name('users.create-petugas');
     Route::post('/users/petugas', [UserController::class, 'storePetugas'])->name('users.store-petugas');
     Route::get('/users/siswa/create', [UserController::class, 'createSiswa'])->name('users.create-siswa');
