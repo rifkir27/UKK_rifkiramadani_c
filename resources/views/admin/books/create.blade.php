@@ -9,7 +9,7 @@
 </div>
 
 <div class="bg-white rounded-xl shadow p-6 max-w-2xl">
-    <form action="{{ route('admin.books.store') }}" method="POST">
+    <form action="{{ route('admin.books.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div class="mb-4">
@@ -44,6 +44,11 @@
                         <option value="{{ $cat->id }}">{{ $cat->name }}</option>
                     @endforeach
                 </select>
+            </div>
+            <div class="mb-4 md:col-span-2">
+                <label class="block text-gray-700 font-bold mb-2">Cover Buku</label>
+                <input type="file" name="cover_image" accept="image/*" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-indigo-500 outline-none">
+                <p class="text-gray-500 text-xs mt-1">Format: jpeg, png, jpg, gif (max 2MB)</p>
             </div>
             <div class="mb-4 md:col-span-2">
                 <label class="block text-gray-700 font-bold mb-2">Deskripsi</label>

@@ -22,7 +22,7 @@ use App\Http\Controllers\Student\FineController as StudentFine;
 
 // Public
 Route::get('/', function () {
-    return redirect('/login');
+    return view('landing');
 });
 
 // Auth Routes
@@ -37,6 +37,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::resource('categories', CategoryController::class);
     Route::resource('books', BookController::class);
+    Route::get('/books/{book}/barcode', [BookController::class, 'showBarcode'])->name('books.barcode');
     Route::resource('rayons', RayonController::class);
     Route::resource('rombels', RombelController::class);
     Route::resource('users', UserController::class);

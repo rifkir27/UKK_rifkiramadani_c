@@ -1,14 +1,17 @@
-# TODO - Pemisahan Tambah Petugas & Siswa
+# TODO: Notifikasi Overdue & Buku Sama Sudah Dipinjam
 
-- [x] 1. Update `resources/views/admin/users/index.blade.php` — ganti tombol jadi 2: Tambah Petugas & Tambah Siswa
-- [x] 2. Create `resources/views/admin/users/create-petugas.blade.php`
-- [x] 3. Create `resources/views/admin/users/create-siswa.blade.php`
-- [x] 4. Update `app/Http/Controllers/Admin/UserController.php` — tambah method createPetugas, createSiswa, storePetugas, storeSiswa
-- [x] 5. Update `routes/web.php` — tambah route untuk petugas dan siswa
-- [x] 6. Create `resources/views/admin/users/index-petugas.blade.php` — halaman daftar petugas terpisah
-- [x] 7. Create `resources/views/admin/users/index-siswa.blade.php` — halaman daftar siswa terpisah
-- [x] 8. Update `app/Http/Controllers/Admin/UserController.php` — tambah indexPetugas & indexSiswa
-- [x] 9. Update `routes/web.php` — tambah route index petugas & siswa
-- [x] 10. Update `resources/views/layouts/partials/sidebar-admin.blade.php` — menu terpisah
-- [x] 11. Update `app/Http/Controllers/Admin/UserController.php` — notifikasi update siswa/petugas dengan nama
+## Plan
+- [x] 1. Update `BookController::show()` - Query cek buku sudah dipinjam & overdue
+- [x] 2. Update `BookController::borrow()` - Validasi cek buku sudah dipinjam & overdue
+- [x] 3. Update `resources/views/student/books/show.blade.php` - Tampilkan notifikasi
+- [x] 4. Update `resources/views/student/books/index.blade.php` - Tampilkan notifikasi overdue global
+
+## Dependent Files
+- `app/Http/Controllers/Student/BookController.php`
+- `resources/views/student/books/show.blade.php`
+- `resources/views/student/books/index.blade.php`
+
+## Followup
+- Testing dengan login siswa
+
 

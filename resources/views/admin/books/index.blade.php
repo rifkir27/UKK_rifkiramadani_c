@@ -16,11 +16,18 @@
 <div class="bg-white rounded-xl shadow p-6">
     <div class="overflow-x-auto">
         <table class="w-full text-left">
-            <thead><tr class="bg-gray-50"><th class="px-4 py-3">Kode</th><th class="px-4 py-3">Judul</th><th class="px-4 py-3">Penulis</th><th class="px-4 py-3">Kategori</th><th class="px-4 py-3">Stok</th><th class="px-4 py-3">Harga</th><th class="px-4 py-3">Status</th><th class="px-4 py-3">Aksi</th></tr></thead>
+            <thead><tr class="bg-gray-50"><th class="px-4 py-3">Kode</th><th class="px-4 py-3">Cover</th><th class="px-4 py-3">Judul</th><th class="px-4 py-3">Penulis</th><th class="px-4 py-3">Kategori</th><th class="px-4 py-3">Stok</th><th class="px-4 py-3">Harga</th><th class="px-4 py-3">Status</th><th class="px-4 py-3">Aksi</th></tr></thead>
             <tbody>
                 @forelse($books as $book)
                 <tr class="border-t">
                     <td class="px-4 py-3 font-mono text-sm">{{ $book->code }}</td>
+                    <td class="px-4 py-3">
+                        @if($book->cover_image)
+                            <img src="{{ asset('storage/' . $book->cover_image) }}" alt="Cover" class="h-12 w-10 object-cover rounded shadow">
+                        @else
+                            <div class="h-12 w-10 bg-gray-200 rounded flex items-center justify-center text-gray-400 text-xs">No<br>Cover</div>
+                        @endif
+                    </td>
                     <td class="px-4 py-3 font-medium">{{ $book->title }}</td>
                     <td class="px-4 py-3">{{ $book->author }}</td>
                     <td class="px-4 py-3">{{ $book->category->name ?? '-' }}</td>
@@ -33,6 +40,7 @@
                         @else<span class="bg-red-100 text-red-800 px-2 py-1 rounded text-xs">Hilang</span>@endif
                     </td>
                     <td class="px-4 py-3">
+                        <a href="{{ route('admin.books.barcode', $book) }}" class="text-green-600 hover:underline mr-3" title="Barcode"><i class="fas fa-barcode"></i></a>
                         <a href="{{ route('admin.books.edit', $book) }}" class="text-blue-600 hover:underline mr-3"><i class="fas fa-edit"></i></a>
                         <form action="{{ route('admin.books.destroy', $book) }}" method="POST" class="inline" onsubmit="return confirm('Yakin hapus?')">
                             @csrf @method('DELETE')
@@ -40,9 +48,10 @@
                         </form>
                     </td>
                 </tr>
-                @empty<tr><td colspan="8" class="px-4 py-6 text-center text-gray-500">Belum ada buku</td></tr>@endforelse
+                @empty<tr><td colspan="9" class="px-4 py-6 text-center text-gray-500">Belum ada buku</td></tr>@endforelse
             </tbody>
         </table>
     </div>
 </div>
 @endsection
+

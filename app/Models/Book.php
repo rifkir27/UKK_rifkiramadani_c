@@ -6,20 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Book extends Model
 {
-    protected $fillable = [
+protected $fillable = [
         'category_id',
-        'code',
-        'isbn',
-        'title',
-        'author',
-        'publisher',
-        'year',
-        'stock',
-        'price',
-        'cover_image',
-        'description',
-        'status',
-    ];
+        'code
 
     public function category()
     {

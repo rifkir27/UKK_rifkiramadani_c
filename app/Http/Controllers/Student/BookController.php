@@ -26,13 +26,36 @@ class BookController extends Controller
 
         $books = $query->latest('updated_at')->get();
         $categories = Category::all();
-        return view('student.books.index', compact('books', 'categories'));
+
+        // Cek apakah siswa memiliki peminjaman yang sudah overdue
+        $hasOverdue = Transaction::where('student_id', auth()->id())
+            ->where('status', 'borrowed')
+            ->whereDate('due_date', '<', now())
+            ->exists();
+
+        return view('student.books.index', compact('books', 'categories', 'hasOverdue'));
     }
 
     public function show(Book $book)
     {
         $book->load('category');
-        return view('student.books.show', compact('book'));
+
+        $studentId = auth()->id();
+
+        // Cek apakah siswa sedang meminjam buku ini
+        $alreadyBorrowed = Transaction::where('student_id', $studentId)
+            ->where('status', 'borrowed')
+            ->whereHas('details', function ($q) use ($book) {
+                $q->where('book_id', $book->id);
+            })->exists();
+
+        // Cek apakah siswa memiliki peminjaman yang sudah overdue
+        $hasOverdue = Transaction::where('student_id', $studentId)
+            ->where('status', 'borrowed')
+            ->whereDate('due_date', '<', now())
+            ->exists();
+
+        return view('student.books.show', compact('book', 'alreadyBorrowed', 'hasOverdue'));
     }
 
     public function borrow(Request $request, Book $book)
@@ -40,6 +63,31 @@ class BookController extends Controller
         $request->validate([
             'due_date' => 'required|date|after:today',
         ]);
+
+        $studentId = auth()->id();
+
+        // Cek apakah siswa sudah meminjam buku ini
+        $alreadyBorrowed = Transaction::where('student_id', $studentId)
+            ->where('status', 'borrowed')
+            ->whereHas('details', function ($q) use ($book) {
+                $q->where('book_id', $book->id);
+            })->exists();
+
+        if ($alreadyBorrowed) {
+            return redirect()->route('siswa.books.show', $book)
+                ->with('error', 'Anda sudah meminjam buku ini. Tidak dapat meminjam buku yang sama.');
+        }
+
+        // Cek apakah siswa memiliki peminjaman yang sudah overdue
+        $hasOverdue = Transaction::where('student_id', $studentId)
+            ->where('status', 'borrowed')
+            ->whereDate('due_date', '<', now())
+            ->exists();
+
+        if ($hasOverdue) {
+            return redirect()->route('siswa.books.show', $book)
+                ->with('error', 'Anda memiliki peminjaman yang sudah lewat jatuh tempo. Segera kembalikan buku terlebih dahulu.');
+        }
 
         $transaction = Transaction::create([
             'transaction_code' => 'TRX-' . now()->format('YmdHis') . '-' . auth()->id(),
